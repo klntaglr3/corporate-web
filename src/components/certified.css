@@ -1,0 +1,188 @@
+.cert {
+  position: relative;
+  z-index: 2;
+  background: #ffffff;
+  color: #0b1220;
+  font-family: var(--font);
+  padding: clamp(64px, 7vw, 120px) 0 clamp(64px, 7vw, 110px);
+}
+
+.cert__inner {
+  padding: 0 var(--gutter);
+}
+
+.cert h2,
+.cert h3,
+.cert h4,
+.cert p,
+.cert hr {
+  margin: 0;
+}
+
+/* gradient title: 149A46 -> A8DB00 */
+.cert__title {
+  display: inline-block;
+  font-size: clamp(2rem, 3.4vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.15;
+  background: linear-gradient(90deg, #149a46 0%, #a8db00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@property --cert-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.cert__card {
+  position: relative;
+  isolation: isolate;
+  margin-top: clamp(28px, 3vw, 48px);
+  padding: clamp(24px, 2.2vw, 36px);
+  border-radius: 16px;
+  border: 1px solid transparent;
+  /* Figma fill: FFFFFF 0% -> F0FDF4 100%, corner to corner
+     Figma stroke: A8DB00 0% -> FFFFFF 29%, 1px inside */
+  background:
+    linear-gradient(to bottom right, #ffffff 0%, #f0fdf4 100%) padding-box,
+    linear-gradient(to bottom right, #a8db00 0%, #ffffff 29%, #ffffff 100%) border-box;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 10px 28px -16px rgba(20, 154, 70, 0.22);
+}
+
+/* rotating chrome ring on the border */
+.cert__ring {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1.5px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--cert-angle),
+    rgba(168, 219, 0, 0) 0deg,
+    rgba(168, 219, 0, 0) 200deg,
+    rgba(20, 154, 70, 0.9) 275deg,
+    #a8db00 320deg,
+    #ffffff 345deg,
+    rgba(255, 255, 255, 0) 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: cert-spin 4s linear infinite;
+}
+
+@keyframes cert-spin {
+  to {
+    --cert-angle: 360deg;
+  }
+}
+
+.cert__card-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cert__card-head h3 {
+  font-size: clamp(1.6rem, 2.5vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+}
+
+.cert__card hr {
+  height: 1px;
+  border: 0;
+  margin: clamp(18px, 2vw, 28px) 0;
+  background: rgba(15, 23, 42, 0.12);
+}
+
+.cert__card h4 {
+  font-size: clamp(1.3rem, 1.8vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+}
+
+.cert__card p {
+  margin-top: 14px;
+  font-size: clamp(0.95rem, 1.2vw, 1.45rem);
+  line-height: 1.45;
+  letter-spacing: -0.04em;
+  color: #6b7686;
+}
+
+/* logo marquee: slow, small, soft edges */
+.cert__marquee {
+  margin-top: clamp(40px, 5vw, 80px);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+}
+
+.cert__track {
+  display: flex;
+  width: max-content;
+  animation: cert-marquee 80s linear infinite;
+  will-change: transform;
+}
+
+.cert__group {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: clamp(40px, 5vw, 80px);
+  padding-right: clamp(40px, 5vw, 80px);   /* same as gap, so the loop seam is invisible */
+}
+
+.cert__group img {
+  height: clamp(44px, 4.2vw, 76px);
+  width: auto;
+  aspect-ratio: 260 / 76;
+  object-fit: contain;
+  flex: none;
+  user-select: none;
+}
+
+@keyframes cert-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 900px) {
+  .cert__card-head {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert__track,
+  .cert__ring {
+    animation: none;
+  }
+}
+
+/* gradient fill on the Solar icon (149A46 -> A8DB00) */
+.cert__icon,
+.cert__icon path {
+  fill: url(#certGrad);
+}
+
+/* keep the white check mark cut-out visible if the icon uses a stroke/fill pair */
+.cert__icon path[fill='none'] {
+  fill: none;
+}.cert.is-paused .cert__track,
+.cert.is-paused .cert__ring {
+  animation-play-state: paused;
+}
+
+.cert__marquee {
+  contain: paint;
+}

@@ -1,15 +1,28 @@
 import { useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from './Navbar'
 import useHideOnScroll from '../hooks/useHideOnScroll'
+import useNavTheme from '../hooks/useNavTheme'
 import MagneticButton from './MagneticButton'
 import heroBg from '../assets/herobg1.svg'
 import './hero.css'
 import { AltArrowRightIcon } from '@solar-icons/react/linear/alt-arrow-right'
-gsap.registerPlugin(useGSAP)
+import { StarIcon } from '@solar-icons/react/bold/star'
+
+// every "Ellipse *.svg" in src/assets, first 5 sorted by name
+import ell4 from '../assets/Ellipse 4.svg'
+import ell5 from '../assets/Ellipse 5.svg'
+import ell6 from '../assets/Ellipse 6.svg'
+import ell8 from '../assets/Ellipse 8.svg'
+import ell9 from '../assets/Ellipse 9.svg'
+
+const avatars = [ell4, ell5, ell6, ell8, ell9]
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 const headlineLines = ['Empowering the', 'Healthcare Sector', 'in the Philippines']
+const eyebrowWords = ['Pushing Boundaries', 'Improving Solutions', 'Evolving Technologies']
 
 function ChevronRight() {
   return (
@@ -29,65 +42,44 @@ export default function Hero() {
   const root = useRef(null)
   const navRef = useRef(null)
   useHideOnScroll(navRef)
+  useNavTheme(navRef)
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia()
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
 
-        // background: slow cinematic settle
-        tl.fromTo(
-          '.hero__bg img',
-          { scale: 1.12 },
-          { scale: 1, duration: 2.4, ease: 'power2.out' },
-          0
-        )
 
-        tl.fromTo(
-          '.hero__overlay',
-          { opacity: 0 },
-          { opacity: 1, duration: 1.2, ease: 'power1.out' },
-          0
-        )
+        // rotating eyebrow: blur-fade in, hold, blur-fade out, next word
+        const words = gsap.utils.toArray('.hero__eyebrow-word')
+        gsap.set(words, { opacity: 0, y: 14, filter: 'blur(10px)' })
+        const loop = gsap.timeline({ repeat: -1 })
+        words.forEach((w) => {
+          loop
+            .to(w, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' })
+            .to(w, {
+              opacity: 0,
+              y: -14,
+              filter: 'blur(10px)',
+              duration: 0.7,
+              ease: 'power2.in',
+            }, '+=1.8')
+        })
 
-        // navbar drops in
-        tl.fromTo(
-          navRef.current,
-          { yPercent: -100, opacity: 0 },
-          { yPercent: 0, opacity: 1, duration: 0.9 },
-          0.2
-        )
+        // hero fully covered by About: stop painting and animating it
+        ScrollTrigger.create({
+          trigger: '#about',
+          start: 'top top',
+          end: 'max',
+          onToggle: (s) => {
+            root.current.classList.toggle('is-off', s.isActive)
+            if (s.isActive) loop.pause()
+            else loop.resume()
+          },
+        })
 
-        // headline: masked line reveal
-        tl.fromTo(
-          '.hero__line-inner',
-          { yPercent: 150, rotate: 2 },
-          { yPercent: 0, rotate: 0, duration: 1.1, stagger: 0.12 },
-          0.45
-        )
 
-        tl.fromTo(
-          '.hero__desc',
-          { y: 28, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.9 },
-          1.0
-        )
-
-        tl.fromTo(
-          '.hero__divider',
-          { scaleX: 0 },
-          { scaleX: 1, duration: 1.2, ease: 'power3.inOut' },
-          1.1
-        )
-
-        tl.fromTo(
-          '.hero__btn',
-          { y: 24, opacity: 0, scale: 0.94 },
-          { y: 0, opacity: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: 'back.out(1.6)' },
-          1.3
-        )
 
       })
 
@@ -107,7 +99,7 @@ export default function Hero() {
           },
         })
 
-        tl.fromTo('.hero__bg', { scale: 1.1 }, { scale: 1, force3D: true }, 0) // image zoom out
+        tl.fromTo('.hero__bg img', { scale: 1 }, { scale: 1.08, transformOrigin: '50% 0%', force3D: true }, 0) // slow zoom, never exposes a gap
           .fromTo('.hero__shade', { opacity: 0 }, { opacity: 0.45 }, 0)         // cheap dimming
           .fromTo('.hero__content', { y: 0, opacity: 1 }, { y: -70, opacity: 0.2 }, 0)
       })
@@ -115,9 +107,10 @@ export default function Hero() {
       // no-motion fallback: everything visible, nothing animated
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set(
-          ['.hero__line-inner', '.hero__desc', '.hero__btn', '.hero__divider'],
+          ['.hero__line-inner', '.hero__eyebrow', '.hero__trust', '.hero__btn'],
           { clearProps: 'all' }
         )
+        gsap.set('.hero__eyebrow-word:first-child', { opacity: 1 })
       })
 
       return () => mm.revert()
@@ -132,12 +125,22 @@ export default function Hero() {
       <div className="hero" id="home" ref={root}>
         <div className="hero__inner">
           <div className="hero__bg" aria-hidden="true">
-            <img className="hero__bg-main" src={heroBg} alt="" />
+            <img className="hero__bg-main" src={heroBg} alt="" fetchPriority="high" decoding="async" />
           </div>
           <div className="hero__overlay" aria-hidden="true" />
           <div className="hero__shade" aria-hidden="true" />
 
-          <div className="hero__content">
+                   <div className="hero__content">
+            <p className="hero__eyebrow" aria-label={eyebrowWords.join(', ')}>
+              <span className="hero__eyebrow-stage" aria-hidden="true">
+                {eyebrowWords.map((w) => (
+                  <span className="hero__eyebrow-word" key={w}>
+                    {w}
+                  </span>
+                ))}
+              </span>
+            </p>
+
             <h1 className="hero__title">
               {headlineLines.map((line) => (
                 <span className="hero__line" key={line}>
@@ -146,25 +149,38 @@ export default function Hero() {
               ))}
             </h1>
 
-            <p className="hero__desc">
-              Enov8tive empowers healthcare providers across the Philippines with
-              innovative medical software built to make every practice smarter,
-              faster, and better.
-            </p>
-
-            <div className="hero__divider" />
+            <div className="hero__trust">
+              <div className="hero__avatars">
+                {avatars.map((src, i) => (
+                  <img src={src} alt="" key={i} />
+                ))}
+              </div>
+              <div>
+                <div className="hero__rating-top">
+                  <span className="hero__rating-line" />
+                  <span className="hero__stars" aria-label="5 out of 5 stars">
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <span className="hero__star" key={i}>
+                        <StarIcon size={26} color="currentColor" aria-hidden="true" />
+                      </span>
+                    ))}
+                  </span>
+                </div>
+                <p className="hero__trust-text">Trusted by 10k+ Providers Globally</p>
+              </div>
+            </div>
 
             <div className="hero__actions">
               <MagneticButton href="#contact" className="hero__btn hero__btn--primary">
                 Inquire Now
-                <AltArrowRightIcon size={22} aria-hidden="true" />
+                <AltArrowRightIcon size={18} aria-hidden="true" />
               </MagneticButton>
               <MagneticButton href="#about" className="hero__btn hero__btn--glass">
                 About Us
               </MagneticButton>
             </div>
+            </div>
           </div>
-        </div>
       </div>
     </>
   )

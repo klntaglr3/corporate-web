@@ -1,0 +1,183 @@
+.testi {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  background: #ffffff;
+  color: #0b1220;
+  font-family: var(--font);
+  padding: clamp(56px, 6vw, 110px) var(--gutter) clamp(72px, 8vw, 140px);
+}
+
+.testi h2,
+.testi p,
+.testi blockquote {
+  margin: 0;
+}
+/* big quote mark, top right */
+.testi__mark {
+  position: absolute;
+  top: clamp(40px, 6vw, 110px);
+  right: var(--gutter);
+  width: clamp(70px, 7.8vw, 150px);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.testi__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.testi__label {
+  font-size: clamp(1.3rem, 1.9vw, 2.3rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  color: #3a4352;
+}
+
+.testi__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.testi__dots button {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #cbd5df;
+  overflow: hidden;
+  cursor: pointer;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.testi__dots button.is-on {
+  width: 34px;
+}
+.testi__dots button.is-on {
+  background: #b6e6ee;
+}
+/* the fill that tells you when the next one is coming */
+.testi__dots button i {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0891b2, #06b6d4);
+  transform-origin: left center;
+  transform: scaleX(var(--p, 0));
+}.testi {
+  user-select: none;
+  touch-action: pan-y;
+}
+.testi__quote {
+  display: grid;                      /* all quotes stack in one cell */
+  max-width: 1360px;
+  margin-top: clamp(40px, 4.2vw, 80px);
+  font-size: clamp(1.4rem, 2.2vw, 2.6rem);   /* ~42px at 1920, room for long quotes */
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+  color: #0b1220;
+  text-wrap: balance;
+}
+
+.testi__ghost,
+.testi__swap {
+  grid-area: 1 / 1;
+  align-self: center;
+}
+
+.testi__ghost {
+  visibility: hidden;
+  pointer-events: none;
+}
+/* author row */
+.testi__author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 6vw, 110px);
+  margin-top: clamp(48px, 5vw, 88px);
+}
+
+.testi__author button {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border: 0;
+  outline: none;
+  border-radius: 50%;
+  background: #fff;
+  color: #0b1220;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 6px 16px -8px rgba(15, 23, 42, 0.25);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease,
+    color 0.3s ease;
+}
+
+.testi__author button:hover {
+  background: #06b6d4;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.testi__author button:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 3px;
+}
+
+.testi__person {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  text-align: left;
+}
+
+.testi__person img {
+  width: clamp(52px, 3.6vw, 70px);
+  height: auto;
+  display: block;
+}
+
+.testi__person strong {
+  display: block;
+  font-size: clamp(1.1rem, 1.7vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+}
+
+.testi__person span {
+  display: block;
+  margin-top: 2px;
+  font-size: clamp(0.95rem, 1.35vw, 1.6rem);
+  letter-spacing: -0.04em;
+  color: #5b6472;
+}
+
+@media (max-width: 900px) {
+  .testi__mark {
+    top: 24px;
+    width: 56px;
+  }
+
+  .testi__label {
+    margin-top: 48px;
+  }
+
+  .testi__author {
+    gap: 16px;
+  }
+
+  .testi__author button {
+    width: 48px;
+    height: 48px;
+  }
+}

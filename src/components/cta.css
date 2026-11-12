@@ -1,0 +1,91 @@
+.cta {
+  position: relative;
+  z-index: 2;
+  background: #ffffff;
+  font-family: var(--font);
+  padding: clamp(24px, 3vw, 56px) var(--gutter) clamp(24px, 3vw, 48px);
+}
+
+.cta__banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  min-height: clamp(260px, 26vw, 460px);
+  border-radius: 20px;
+  background: #0b4a5e;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 24px 48px -28px rgba(3, 49, 74, 0.5);
+}
+
+.cta__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.cta__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* mid-tone teal wash: image stays visible, white text stays readable */
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 50%, rgba(8, 100, 130, 0.5) 0%, rgba(8, 100, 130, 0.3) 60%, rgba(8, 100, 130, 0.12) 100%),
+    linear-gradient(180deg, rgba(103, 232, 249, 0.1) 0%, rgba(3, 49, 74, 0.28) 100%);
+}
+
+.cta__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 2.4vw, 40px);
+  padding: clamp(32px, 4vw, 72px) var(--gutter);
+  text-align: center;
+}
+
+.cta__title {
+  margin: 0;
+  max-width: 18ch;
+  font-size: clamp(1.9rem, 3.4vw, 4rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+  text-wrap: balance;
+  text-shadow:
+    0 1px 2px rgba(3, 49, 74, 0.35),
+    0 4px 16px rgba(3, 49, 74, 0.45);
+}
+
+.cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(14px, 1.6vw, 28px);
+}
+
+/* same buttons as the hero, just a touch smaller */
+.cta__btn {
+  font-size: clamp(1rem, 1.2vw, 1.4rem);
+  padding: 16px 26px;
+}
+
+/* the glass variant has a 2px inside stroke, so it needs the same padding */
+.cta__btn.hero__btn--glass {
+  padding: 16px 26px;
+}
+
+@media (max-width: 900px) {
+  .cta__banner {
+    border-radius: 16px;
+  }
+}

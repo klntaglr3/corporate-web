@@ -3,7 +3,7 @@
   --teal-600: #0891b2;
   --teal-700: #0e7490;
   --ink: #1f2937;
-  --nav-h: 78px;
+  --nav-h: 76px;
   --gutter: clamp(20px, 5vw, 96px);
   --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --bg-offset: 0px;
@@ -25,18 +25,28 @@ body {
   background: #eaf4f7;
 }
 
-/* ───────── Navbar ───────── */
+/* default (every section): frosted white glass with a gray stroke */
 .nav {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
-  height: 74px;
-  background: rgba(240, 249, 255, 0.9);
-  border: 2px solid #ffffff;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  height: var(--nav-h);
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(156, 163, 175, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.5s ease, border-color 0.5s ease;
+  will-change: transform;
+  transform: translateZ(0);
+  contain: layout paint;
 }
 
+/* hero only: no stroke, the original solid look */
+.nav.is-hero {
+  background: #eaeff0;
+  border-color: transparent;
+  box-shadow: none;
+}
 .nav__inner {
   height: 100%;
   padding: 0 var(--gutter);
@@ -52,7 +62,7 @@ body {
 }
 
 .nav__logo img {
-  height: 45px;
+  height: 40px;
   width: auto;
   display: block;
 }
@@ -65,7 +75,7 @@ body {
 
 .nav__link {
   position: relative;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 500;
   color: var(--ink);
   text-decoration: none;
@@ -100,12 +110,12 @@ body {
   justify-self: end;
   display: inline-flex;
   align-items: center;
-  height: 58px;
-  padding: 0 25px;
+  height: 50px;
+  padding: 0 22px;
   background-color: #ffffff;
   border: 1.5px solid var(--teal-600);
   border-radius: 999px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--teal-600);
   text-decoration: none;
@@ -115,15 +125,14 @@ body {
 
  
 
-/* ───────── Hero ───────── */
 .hero {
-  position: sticky;          /* stays put while About slides over it */
-  top: 0;
+  position: sticky;
+  top: calc(var(--nav-h) * -1);   /* nav strip scrolls away, image fills the screen */
   z-index: 0;
-  height: 100vh;
-  height: 100svh;
+  height: calc(100vh + var(--nav-h));
+  height: calc(100svh + var(--nav-h));
   overflow: hidden;
-  background: linear-gradient(180deg, #b9c6c6 0%, #8fa6a8 100%);       /* shows at the edges when the hero scales down */
+  background: #f0f9ff;            /* same tone as the navbar */
   font-family: var(--font);
   color: #fff;
 }
@@ -132,16 +141,14 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
+  padding-top: var(--nav-h);
   display: flex;
   align-items: center;
   overflow: hidden;
-  transform-origin: 50% 50%;
-  will-change: auto;
 }
-
 .hero__bg {
   position: absolute;
-  inset: 0;
+  inset: var(--nav-h) 0 0 0;
   z-index: 0;
   overflow: hidden;
   background: #0b4a5e;
@@ -161,7 +168,7 @@ body {
 
 .hero__shade {
   position: absolute;
-  inset: 0;
+  inset: var(--nav-h) 0 0 0;
   z-index: 1;
   background: #03141b;
   opacity: 0;
@@ -170,14 +177,15 @@ body {
 
 .hero__overlay {
   position: absolute;
-  inset: var(--bg-offset) 0 0 0;
+  inset: var(--nav-h) 0 0 0;       /* covers only the photo, same box as .hero__bg */
   z-index: 1;
-  /* Figma: Linear, layer 75%, stop 11% #005F78 @ 50%, stop 76% #005F78 @ 0%
-     alpha is 0.5 x 0.75 = 0.375 (the 75% is baked in because GSAP animates this layer's opacity) */
+  pointer-events: none;
+  /* Figma: Linear, layer 75%
+     stop 11% = #005F78 @ 50%, stop 76% = #005F78 @ 0%
+     alpha = 0.50 x 0.75 = 0.375 (layer opacity baked in, since GSAP animates this element's opacity) */
   background: linear-gradient(
     90deg,
-    rgba(0, 95, 120, 0.42) 11%,
-
+    rgba(0, 95, 120, 0.375) 11%,
     rgba(0, 95, 120, 0) 76%
   );
 }
@@ -186,19 +194,19 @@ body {
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: calc(var(--nav-h) + 40px) var(--gutter) 60px;
+  padding: 40px var(--gutter) 60px;
 }
 
 .hero__title {
   margin: 0;
   max-width: 14ch;
-  font-size: clamp(2.5rem, 4.6875vw, 5.625rem);
+  font-size: clamp(2.25rem, 4.115vw, 4.94rem);   /* ~79px at 1920 */
   font-weight: 500;
-  line-height: clamp(2.7rem, 4.58vw, 5.5rem);
+  line-height: 1.05;   /* about 89px pitch at 1920, same as the reference */
   letter-spacing: -0.045em;
   text-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.1),
-    0 6px 14px rgba(14, 143, 168, 0.4);
+    0 1px 2px rgba(15, 23, 42, 0.08),      /* Drop shadow: X0 Y1 blur2, 0F172A 8% */
+    0 6px 12px rgba(14, 143, 168, 0.45);   /* Drop shadow: X0 Y6 blur12, 0E8FA8 45% */
 }
 
 .hero__line {
@@ -207,7 +215,7 @@ body {
   /* extra padding so the shadow isn't clipped by the reveal mask,
      negative margins cancel it out so the layout doesn't shift */
   padding: 0.1em 0.15em 0.3em;
-  margin: -0.1em -0.15em -0.22em;
+  margin: -0.1em -0.15em -0.3em;   /* net zero, so it no longer adds to the line spacing */
 }
 
 .hero__line-inner {
@@ -249,7 +257,7 @@ body {
   padding: 21px 34px;
   border-radius: 999px;
   font-family: var(--font);
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 500;
   letter-spacing: -0.01em;
   text-decoration: none;
@@ -263,6 +271,7 @@ body {
   stroke-width: 2.5;
 }
 .hero__btn--primary {
+  padding: 21px 28px;
   color: #fff;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 52%),
@@ -289,18 +298,32 @@ body {
 
 .hero__btn--glass {
   color: #fff;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.26) 0%,
-    rgba(255, 255, 255, 0.12) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  box-shadow:
-    0 6px 16px rgba(8, 60, 80, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),        /* top edge light */
-    inset 0 -1px 0 rgba(255, 255, 255, 0.15);      /* bottom edge */
+  /* Fill: linear, top to bottom, FFFFFF 38% to 12% */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.12) 100%);
+  border: 0;
+  padding: 23px 34px;               /* the 2px inside stroke is already counted */
+  /* Background blur: 20 */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* Drop shadow: X0 Y3 blur4 spread-2, 0F172A 8% */
+  box-shadow: 0 3px 4px -2px rgba(15, 23, 42, 0.08);
+}
+
+/* Stroke: linear FFFFFF 10% to 60%, inside, 2px */
+.hero__btn--glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.6) 100%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .hero__btn:focus-visible,
@@ -315,8 +338,15 @@ body {
   .nav__links {
     display: none;
   }
+    .nav__login,
+  .nav__right .dd {
+    display: none;
+  }
   .nav__inner {
     grid-template-columns: 1fr auto;
+  }
+    .hero__btn--glass {
+    padding: 16px 28px;
   }
   .nav__cta {
     height: 44px;
@@ -445,4 +475,220 @@ body {
   .hero__btn--primary::after {
     animation: none;
   }
+}
+
+.hero__eyebrow {
+  margin: 0 0 clamp(16px, 2vw, 28px);
+  font-size: clamp(0.9rem, 1.135vw, 1.36rem);
+  font-weight: 400;
+  color: #A5F3FC;
+  text-shadow: 0 2px 14px rgba(8, 80, 105, 0.4);
+}
+
+.hero__eyebrow-stage {
+  position: relative;
+  display: inline-grid;     /* all words stack in one cell, so the width fits the longest */
+}
+
+.hero__eyebrow-word {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  will-change: opacity, transform, filter;
+}
+
+.hero__trust {
+  display: flex;
+  align-items: center;   /* avatars sit at the vertical middle of the rating block */
+  gap: 4px;   /* the avatar SVGs have about 7px of internal padding */
+  margin: clamp(24px, 2.4vw, 36px) 0 clamp(20px, 2vw, 28px);
+}
+
+.hero__avatars {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  margin-left: -10px;   /* the SVGs have internal padding, align to the text edge */
+}
+
+.hero__avatars img {
+  display: block;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-left: -30px;
+}
+
+.hero__avatars img:first-child {
+  margin-left: 0;
+}
+
+.hero__rating-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero__rating-line {
+  width: 104px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.hero__stars {
+  display: flex;
+  gap: 8px;
+  color: #FACC15;
+  line-height: 0;
+  filter: drop-shadow(0 2px 4px rgba(8, 80, 105, 0.35));
+}
+
+.hero__trust-text {
+  margin: 8px 0 0;
+  line-height: 1.2;
+  font-size: clamp(0.85rem, 0.95vw, 1.1rem);
+  color: #f4f4f4;
+  text-shadow: 0 2px 10px rgba(8, 80, 105, 0.4);
+}
+
+.nav__right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.3vw, 24px);
+}
+
+.nav__login {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 8px 6px;
+  transition: color 0.25s ease;
+}
+
+.nav__login:hover {
+  color: var(--teal-600);
+}
+
+/* dropdown */
+.dd {
+  position: relative;
+}
+
+.dd__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font);
+  cursor: pointer;
+}
+
+.dd__trigger .nav__link {
+  padding-right: 0;
+}
+
+.dd__chev {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dd.is-open .dd__chev {
+  transform: rotate(180deg);
+}
+
+.nav__country {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 8px 4px;
+}
+
+.nav__flag {
+  width: 26px;
+  height: 18px;
+  object-fit: cover;
+  border-radius: 3px;
+  display: block;
+}
+
+.nav__flag--sm {
+  width: 22px;
+  height: 15px;
+}.nav__link.is-active::after {
+  transform: scaleX(1);
+}
+
+.dd__menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  min-width: 220px;
+  padding: 8px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(156, 163, 175, 0.4);
+  visibility: hidden;
+  box-shadow: 0 18px 40px -18px rgba(15, 23, 42, 0.35);
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s 0.4s;
+}
+
+/* bridges the gap so hover doesn't drop between trigger and menu */
+.dd__menu::before {
+  content: '';
+  position: absolute;
+  inset: -16px 0 auto 0;
+  height: 16px;
+}
+
+.dd__menu--left {
+  left: -16px;
+}
+
+.dd__menu--right {
+  right: 0;
+}
+
+.dd.is-open .dd__menu {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.dd__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dd__item:hover,
+.dd__item.is-current {
+  background: #e6f7fb;
+  color: var(--teal-700);
+}
+
+.hero.is-off * {
+  animation-play-state: paused !important;
 }

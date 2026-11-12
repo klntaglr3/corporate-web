@@ -14,10 +14,11 @@ export default function useHideOnScroll(ref, offset = 120) {
       if (h === hidden) return
       hidden = h
       gsap.to(el, {
-        yPercent: h ? -100 : 0,
-        duration: 0.5,
+        y: h ? -el.offsetHeight - 4 : 0,
+        duration: 0.45,
         ease: 'power3.out',
         overwrite: 'auto',
+        force3D: true,
       })
     }
 

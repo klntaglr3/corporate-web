@@ -1,0 +1,105 @@
+.scrolltop {
+  position: fixed;
+  right: clamp(16px, 2vw, 32px);
+  bottom: clamp(16px, 2vw, 32px);
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.12) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #0e7490;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -10px rgba(15, 23, 42, 0.35);
+  opacity: 0;
+  transform: translateY(16px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.3s ease, color 0.3s ease;
+}
+@property --st-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* static soft stroke */
+.scrolltop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.6) 100%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* rotating chrome comet on top */
+.scrolltop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 2.5px;
+  background: conic-gradient(
+    from var(--st-angle),
+    rgba(255, 255, 255, 0) 0deg,
+    rgba(34, 211, 238, 0) 200deg,
+    rgba(8, 145, 178, 0.9) 275deg,
+    #67e8f9 320deg,
+    #ffffff 345deg,
+    rgba(255, 255, 255, 0) 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: st-spin 3.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes st-spin {
+  to {
+    --st-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolltop::after {
+    animation: none;
+  }
+}
+.scrolltop.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+
+.scrolltop:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 3px;
+}.btn-magnetic.scrolltop {
+  position: fixed;
+  --fill: #06b6d4;
+  --fill-text: #ffffff;
+}
+
+.scrolltop .btn__label {
+  gap: 0;
+}.btn-magnetic.scrolltop {
+  background: rgba(255, 255, 255, 0.55);
+}.scrolltop:not(.is-visible)::after {
+  animation-play-state: paused;
+}

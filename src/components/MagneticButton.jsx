@@ -2,10 +2,18 @@ import { useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
-export default function MagneticButton({ href, className = '', strength = 0.3, children }) {
+export default function MagneticButton({
+  href,
+  onClick,
+  className = '',
+  strength = 0.3,
+  label,
+  children,
+  ...rest
+}) {
   const btn = useRef(null)
   const fill = useRef(null)
-  const label = useRef(null)
+  const labelRef = useRef(null)
 
   useGSAP(
     () => {
@@ -22,8 +30,8 @@ export default function MagneticButton({ href, className = '', strength = 0.3, c
         const opts = { duration: 0.6, ease: 'power3.out' }
         const xTo = gsap.quickTo(el, 'x', opts)
         const yTo = gsap.quickTo(el, 'y', opts)
-        const lxTo = gsap.quickTo(label.current, 'x', opts)
-        const lyTo = gsap.quickTo(label.current, 'y', opts)
+        const lxTo = gsap.quickTo(labelRef.current, 'x', opts)
+        const lyTo = gsap.quickTo(labelRef.current, 'y', opts)
 
         const placeFill = (e) => {
           const r = el.getBoundingClientRect()
@@ -37,12 +45,13 @@ export default function MagneticButton({ href, className = '', strength = 0.3, c
         }
 
         const onEnter = (e) => {
+          r = el.getBoundingClientRect()
           placeFill(e)
           gsap.to(fill.current, { scale: 1, duration: 0.6, ease: 'power3.out', overwrite: true })
         }
 
+        let r = el.getBoundingClientRect()
         const onMove = (e) => {
-          const r = el.getBoundingClientRect()
           const dx = e.clientX - (r.left + r.width / 2)
           const dy = e.clientY - (r.top + r.height / 2)
           xTo(dx * STRENGTH)
@@ -76,12 +85,15 @@ export default function MagneticButton({ href, className = '', strength = 0.3, c
     { scope: btn }
   )
 
+  const Tag = href ? 'a' : 'button'
+  const props = href ? { href } : { type: 'button', onClick }
+
   return (
-    <a href={href} ref={btn} className={`btn-magnetic ${className}`}>
+    <Tag ref={btn} className={`btn-magnetic ${className}`} aria-label={label} {...props} {...rest}>
       <span className="btn__fill" ref={fill} aria-hidden="true" />
-      <span className="btn__label" ref={label}>
+      <span className="btn__label" ref={labelRef}>
         {children}
       </span>
-    </a>
+    </Tag>
   )
 }

@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true })
 
 export default function SmoothScroll() {
   useEffect(() => {
@@ -36,8 +37,13 @@ export default function SmoothScroll() {
     }
     document.addEventListener('click', onClick)
 
+    // images change heights when they load, so re-measure once
+    const onLoad = () => ScrollTrigger.refresh()
+    window.addEventListener('load', onLoad)
+
     return () => {
       document.removeEventListener('click', onClick)
+      window.removeEventListener('load', onLoad)
       gsap.ticker.remove(tick)
       lenis.destroy()
       window.__lenis = null
