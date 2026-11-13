@@ -1,11 +1,10 @@
 import { forwardRef, useEffect, useRef, useState } from 'react'
 import { LuChevronDown } from 'react-icons/lu'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import logo from '../assets/logo.svg'
 import phFlag from '../assets/flagph.svg'
 import MagneticButton from './MagneticButton'
 
-const links = [{ label: 'About Us', href: '#about', id: 'about' }]
+const links = [{ label: 'About Us', href: '#about' }]
 
 const solutions = [
   { label: 'Enov8tiveMD', href: '#solutions' },
@@ -61,27 +60,6 @@ function Dropdown({ trigger, children, align = 'left' }) {
 
 const Navbar = forwardRef(function Navbar(_, ref) {
   const [country, setCountry] = useState(countries[0])
-  const [current, setCurrent] = useState('home')
-
-  // scrollspy: highlight the section currently in view
-  useEffect(() => {
-    const sections = [
-      { id: 'home', start: 'top 50%' },
-      { id: 'about', start: 'top 50%' },
-      { id: 'solutions', start: 'top 50%' },
-    ]
-    const triggers = sections
-      .filter((s) => document.getElementById(s.id))
-      .map((s) =>
-        ScrollTrigger.create({
-          trigger: `#${s.id}`,
-          start: s.start,
-          end: 'bottom 50%',
-          onToggle: (self) => self.isActive && setCurrent(s.id),
-        })
-      )
-    return () => triggers.forEach((t) => t.kill())
-  }, [])
 
   return (
     <header className="nav" ref={ref}>
@@ -92,20 +70,14 @@ const Navbar = forwardRef(function Navbar(_, ref) {
 
         <nav className="nav__links" aria-label="Primary">
           {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              className={`nav__link ${current === l.id ? 'is-active' : ''}`}
-            >
+            <a key={l.label} href={l.href} className="nav__link">
               {l.label}
             </a>
           ))}
 
           <Dropdown
             trigger={
-              <span className={`nav__link nav__link--dd ${current === 'solutions' ? 'is-active' : ''}`}>
-                Solutions
-              </span>
+              <span className="nav__link nav__link--dd">Solutions</span>
             }
           >
             {solutions.map((s) => (

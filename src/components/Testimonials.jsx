@@ -180,20 +180,8 @@ export default function Testimonials() {
       <img className="testi__mark" src={quoteMark} alt="" aria-hidden="true" loading="lazy" decoding="async" />
 
       <div className="testi__inner">
-        <h2 className="testi__label testi__fade">Hear From Our Clients</h2>
-
-        <div className="testi__dots testi__fade">
-          {items.map((_, i) => (
-            <button
-              type="button"
-              aria-label={`Go to testimonial ${i + 1}`}
-              key={i}
-              className={i === index ? 'is-on' : ''}
-              onClick={() => goTo(i, true)}
-            >
-              {i === index && <i ref={fillRef} />}
-            </button>
-          ))}
+        <div className="testi__top testi__fade">
+          <h2 className="testi__label">Hear From Our Clients</h2>
         </div>
 
         <blockquote className="testi__quote testi__fade">
@@ -206,11 +194,7 @@ export default function Testimonials() {
           <span className="testi__swap">“{item.quote}”</span>
         </blockquote>
 
-        <div className="testi__author testi__fade">
-          <button type="button" aria-label="Previous" onClick={() => step(-1)}>
-            <LuChevronLeft size={24} strokeWidth={2.75} />
-          </button>
-
+        <div className="testi__bottom testi__fade">
           <div className="testi__person">
             <img className="testi__swap" src={item.img} alt="" draggable="false" />
             <div className="testi__swap">
@@ -219,11 +203,30 @@ export default function Testimonials() {
             </div>
           </div>
 
-          <button type="button" aria-label="Next" onClick={() => step(1)}>
-            <LuChevronRight size={24} strokeWidth={2.75} />
-          </button>
+          <div className="testi__nav">
+            <div className="testi__dots">
+              {items.map((_, i) => (
+                <button
+                  type="button"
+                  aria-label={`Go to testimonial ${i + 1}`}
+                  key={i}
+                  className={i === index ? 'is-on' : ''}
+                  onClick={() => goTo(i, true)}
+                >
+                  {i === index && <i ref={fillRef} />}
+                </button>
+              ))}
+            </div>
+            <button type="button" aria-label="Previous" onClick={() => step(-1)}>
+              <LuChevronLeft size={22} strokeWidth={2.75} />
+            </button>
+            <button type="button" aria-label="Next" onClick={() => step(1)}>
+              <LuChevronRight size={22} strokeWidth={2.75} />
+            </button>
+          </div>
         </div>
       </div>
+    
     </section>
   )
 }

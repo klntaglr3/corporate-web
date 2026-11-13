@@ -136,59 +136,7 @@ export default function WhatWeDo() {
 
 
 
-  // scroll parallax: re-runs on tab change because the content is remounted
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia()
-      mm.add('(prefers-reduced-motion: no-preference) and (min-width: 901px)', () => {
-        const scrub = { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true }
 
-        // header drifts at different speeds
-        gsap.fromTo('.wwd__title', { yPercent: 25 }, { yPercent: -25, ease: 'none', scrollTrigger: scrub })
-        gsap.fromTo('.wwd__tabs', { yPercent: 40 }, { yPercent: -40, ease: 'none', scrollTrigger: scrub })
-
-        // images move inside their frames
-        gsap.utils.toArray('.wwd__slide-img').forEach((img) => {
-          gsap.fromTo(
-            img,
-            { yPercent: -8, scale: 1.18 },
-            {
-              yPercent: 8,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: img.closest('.wwd__slide'),
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
-              },
-            }
-          )
-        })
-
-        // slider controls and footer lag slightly behind
-        gsap.fromTo(
-          '.wwd__controls, .wwd__footer',
-          { y: 30 },
-          { y: -30, ease: 'none', scrollTrigger: scrub }
-        )
-
-        // grid cards: alternate columns move at different speeds
-        gsap.utils.toArray('.wwd__feature').forEach((card, i) => {
-          gsap.fromTo(
-            card,
-            { y: i % 2 ? 50 : 20 },
-            {
-              y: i % 2 ? -50 : -20,
-              ease: 'none',
-              scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true },
-            }
-          )
-        })
-      })
-      return () => mm.revert()
-    },
-    { scope: root, dependencies: [active], revertOnUpdate: true }
-  )
 
   // small rounded card -> full width as the section scrolls into view
   useGSAP(

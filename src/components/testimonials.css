@@ -27,17 +27,25 @@
 .testi__inner {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: stretch;
+  text-align: left;
+  min-height: clamp(380px, 34vw, 580px);
 }
+
+.testi__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
 
 .testi__label {
-  font-size: clamp(1.3rem, 1.9vw, 2.3rem);
-  font-weight: 500;
-  letter-spacing: -0.05em;
-  color: #3a4352;
+  font-size: clamp(0.85rem, 0.95vw, 1.1rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #0E7490;
 }
-
 .testi__dots {
   display: flex;
   align-items: center;
@@ -77,17 +85,19 @@
   touch-action: pan-y;
 }
 .testi__quote {
-  display: grid;                      /* all quotes stack in one cell */
-  max-width: 1360px;
-  margin-top: clamp(40px, 4.2vw, 80px);
-  font-size: clamp(1.4rem, 2.2vw, 2.6rem);   /* ~42px at 1920, room for long quotes */
+  display: grid;
+  flex: 1;
+  align-content: center;
+  max-width: min(1500px, 100%);
+  margin: clamp(20px, 2.5vw, 48px) 0;
+  font-size: clamp(1.35rem, 2.6vw, 3.1rem);
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.2;
   letter-spacing: -0.04em;
   color: #0b1220;
-  text-wrap: balance;
+  text-wrap: pretty;
+  text-align: left;
 }
-
 .testi__ghost,
 .testi__swap {
   grid-area: 1 / 1;
@@ -179,5 +189,108 @@
   .testi__author button {
     width: 48px;
     height: 48px;
+  }
+}.testi__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.testi__bottom .testi__person {
+  gap: 14px;
+}
+
+.testi__bottom .testi__person img {
+  width: clamp(36px, 2.6vw, 48px);
+}
+
+.testi__bottom .testi__person strong {
+  font-size: clamp(0.9rem, 1vw, 1.1rem);
+  letter-spacing: -0.02em;
+}
+
+.testi__bottom .testi__person span {
+  font-size: clamp(0.8rem, 0.9vw, 1rem);
+  letter-spacing: -0.01em;
+  margin-top: 0;
+}
+
+.testi__nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testi__nav .testi__dots {
+  margin: 0 12px 0 0;
+}
+
+.testi__nav > button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  outline: none;
+  border-radius: 50%;
+  background: #fff;
+  color: #0b1220;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 6px 16px -8px rgba(15, 23, 42, 0.25);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.testi__nav > button:hover {
+  background: #06b6d4;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .testi {
+    padding: 48px 20px 64px;
+  }
+
+  .testi__inner {
+    min-height: auto;
+  }
+
+  .testi__quote {
+    max-width: 100%;
+    margin: 20px 0 28px;
+    font-size: clamp(1.25rem, 4.6vw, 2rem);
+    line-height: 1.25;
+  }
+
+  .testi__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .testi__nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .testi__nav .testi__dots {
+    margin: 0 auto 0 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .testi__mark {
+    width: 44px;
+    top: 20px;
+  }
+
+  .testi__quote {
+    font-size: 1.2rem;
+    letter-spacing: -0.03em;
+  }
+
+  .testi__nav > button {
+    width: 40px;
+    height: 40px;
   }
 }
