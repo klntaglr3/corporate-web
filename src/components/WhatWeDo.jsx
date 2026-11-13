@@ -26,13 +26,13 @@ const tabs = [
     slides: [
       {
         title: 'Integrated Software for Medical Professionals',
-        body: 'Enov8tive is a software ecosystem engineered for the healthcare industry—empowering medical professionals with specialized tools that help deliver better and more efficient patient care.',
+        body: 'VitaLink is a software ecosystem engineered for the healthcare industry—empowering medical professionals with specialized tools that help deliver better and more efficient patient care.',
         img: img62,
       },
       {
         eyebrow: 'Primary · Secondary · Tertiary',
         title: 'Technology Designed for Every Level of Care',
-        body: 'Our platform connects the entire Clinical Workflow—from primary consultations to specialized treatments and hospital care. Whether you’re a clinic, diagnostic center, hospital, or HMO, Enov8tive provides integrated digital tools that improve every stage of patient care.',
+        body: 'Our platform connects the entire Clinical Workflow—from primary consultations to specialized treatments and hospital care. Whether you’re a clinic, diagnostic center, hospital, or HMO, VitaLink provides integrated digital tools that improve every stage of patient care.',
         img: img63,
       },
     ],
@@ -51,7 +51,7 @@ const tabs = [
       {
         title: 'The Careenovators',
         sub: 'Innovators That Care',
-        body: 'Enov8tive is comprised of a diverse, multi-disciplinary group of professionals all dedicated to shaping innovative healthcare solutions with a shared passion for making a positive impact.',
+        body: 'VitaLink is comprised of a diverse, multi-disciplinary group of professionals all dedicated to shaping innovative healthcare solutions with a shared passion for making a positive impact.',
         img: img61,
       },
     ],
@@ -59,7 +59,7 @@ const tabs = [
   {
     id: 'how',
     label: 'How We Do It',
-    title: 'The Enov8tive Approach',
+    title: 'The VitaLink Approach',
     type: 'grid',
     footer: 'We don’t just innovate once—we keep building, evolving, and pushing boundaries.',
     items: [

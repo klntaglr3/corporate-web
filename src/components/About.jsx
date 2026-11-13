@@ -9,7 +9,7 @@ import './about.css'
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 const segments = [
-  'Enov8tive empowers healthcare',
+  'VitaLink empowers healthcare',
   { pill: circle1 },
   'providers across the Philippines with',
   { pill: circle2 },

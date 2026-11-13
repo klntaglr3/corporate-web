@@ -7,8 +7,8 @@ import MagneticButton from './MagneticButton'
 const links = [{ label: 'About Us', href: '#about' }]
 
 const solutions = [
-  { label: 'Enov8tiveMD', href: '#solutions' },
-  { label: 'Enov8tiveLAB', href: '#solutions' },
+  { label: 'VitaLinkMD', href: '#solutions' },
+  { label: 'VitaLinkLAB', href: '#solutions' },
   { label: 'PMRF Digital Form', href: '#solutions' },
 ]
 
@@ -64,8 +64,8 @@ const Navbar = forwardRef(function Navbar(_, ref) {
   return (
     <header className="nav" ref={ref}>
       <div className="nav__inner">
-        <a href="#home" className="nav__logo" aria-label="Enov8tive home">
-          <img src={logo} alt="Enov8tive" />
+        <a href="#home" className="nav__logo" aria-label="VitaLink home">
+          <img src={logo} alt="VitaLink" />
         </a>
 
         <nav className="nav__links" aria-label="Primary">

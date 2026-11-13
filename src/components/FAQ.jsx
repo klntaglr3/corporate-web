@@ -14,19 +14,19 @@ const faqs = [
     q: 'How can I reach out to your Support Team?',
     a: (
       <>
-        For questions or concerns about Enov8tive, contact{' '}
-        <strong>support@enov8tive.com</strong> or call <strong>(808) 720 6077</strong>,
+        For questions or concerns about VitaLink, contact{' '}
+        <strong>support@vitalink.com</strong> or call <strong>(808) 720 6077</strong>,
         Monday–Friday, 8 AM–5 PM.
       </>
     ),
   },
   {
     q: 'Are PhilHealth claims submitted automatically?',
-    a: 'Enov8tive is integrated with PhilHealth eClaims 3.0 to streamline claim submission. Replace this with your final answer.',
+    a: 'VitaLink is integrated with PhilHealth eClaims 3.0 to streamline claim submission. Replace this with your final answer.',
   },
   {
     q: 'Do we need to install anything to use your service?',
-    a: 'Enov8tive is a cross-platform solution, accessible on desktop via any web browser and on mobile through our dedicated app, designed to fit your role and operational needs within the organization.',
+    a: 'VitaLink is a cross-platform solution, accessible on desktop via any web browser and on mobile through our dedicated app, designed to fit your role and operational needs within the organization.',
   },
   {
     q: 'Is your solution only accessible in specific areas?',
@@ -34,7 +34,7 @@ const faqs = [
   },
   {
     q: 'Is my data and my patient’s data secure?',
-    a: 'Yes, Enov8tive is fully compliant with applicable data privacy mandates and HIPAA standards. We take data protection seriously and ensure that patient information is handled with the utmost care, security, and confidentiality.',
+    a: 'Yes, VitaLink is fully compliant with applicable data privacy mandates and HIPAA standards. We take data protection seriously and ensure that patient information is handled with the utmost care, security, and confidentiality.',
   },
 ]
 

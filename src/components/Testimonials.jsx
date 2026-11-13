@@ -12,29 +12,29 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 const items = [
   {
     quote:
-      'I use Enov8tive every day during patient visits, mainly through the mobile app. The MD Notes feature is what I rely on the most.',
-    name: 'Cryryl Cells',
+      'I use VitaLink every day during patient visits, mainly through the mobile app. The MD Notes feature is what I rely on the most.',
+    name: 'Alex Santos',
     role: 'Provider',
     img: testi,
   },
   {
     quote:
-      'Enov8tive’s solutions have revolutionized our operations. The team took the time to understand our needs, and the results have exceeded our expectations.',
-    name: 'Dr. Gabriel Halperin',
+      'VitaLink’s solutions have revolutionized our operations. The team took the time to understand our needs, and the results have exceeded our expectations.',
+    name: 'Jamie Reyes',
     role: 'CEO of Calwound Care',
     img: testi,
   },
   {
     quote:
-      'I use Enov8tive every day, both on the mobile app and the web browser. What I really appreciate is the flexibility of switching between two depending on what I need to do. Features like MD Notes and especially MD Orders have been the most helpful in my daily workflow.',
-    name: 'Carlo Yoshisaki',
+      'I use VitaLink every day, both on the mobile app and the web browser. What I really appreciate is the flexibility of switching between two depending on what I need to do. Features like MD Notes and especially MD Orders have been the most helpful in my daily workflow.',
+    name: 'Sam Cruz',
     role: 'Provider',
     img: testi,
   },
   {
     quote:
-      'Overall, I’ve had a good experience using Enov8tive. I primarily use it during my patient visits and the Quick assessments feature is something I rely on often. The ‘copy from previous’ option is especially helpful and has made my workflow more efficient. Right now, I’m happy with how the system supports my work.',
-    name: 'Robin Fordham',
+      'Overall, I’ve had a good experience using VitaLink. I primarily use it during my patient visits and the Quick assessments feature is something I rely on often. The ‘copy from previous’ option is especially helpful and has made my workflow more efficient. Right now, I’m happy with how the system supports my work.',
+    name: 'Taylor Garcia',
     role: 'Provider',
     img: testi,
   },
